@@ -117,9 +117,9 @@ fun startScreen(navController: NavController) {
                     modifier = Modifier.padding(16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    val prefixes = listOf("TP:", "SV:", "GG:")
+                    val prefixes = listOf("TP-", "SV-", "GG-")
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedPrefix by remember { mutableStateOf("TP:") }
+                    var selectedPrefix by remember { mutableStateOf("TP-") }
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         modifier = Modifier.fillMaxWidth(),

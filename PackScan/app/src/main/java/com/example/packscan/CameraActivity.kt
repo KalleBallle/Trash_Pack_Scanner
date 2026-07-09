@@ -234,7 +234,7 @@ fun saveUriToFigureFolder(context: Context, uri: Uri, id : String): String? {
         }
 
 
-        val fileName = "FIG_IMG_${id.replace(':','_')}.jpg"
+        val fileName = "FIG_IMG_${id.replace('-','_')}.jpg"
         val destinationFile = File(customFolder, fileName)
 
 

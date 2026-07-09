@@ -49,11 +49,11 @@ object DatabaseProvider {
 //stoppa in all hät sen
 fun getAllKnownFigures():  List<Figure> = listOf(
 
-Figure("TP:1", "Grot Dog", "Red", "Trashpack series 1", "Common", "THE GRUBZ", 1, true),
-Figure("TP:2", "Smelly Fish", "Purple", "Trashpack series 1", "Common", "THE GRUBZ", 1000, true),
+Figure("TP-1", "Grot Dog", "Red", "Trashpack series 1", "Common", "THE GRUBZ", 1, true),
+Figure("TP-2", "Smelly Fish", "Purple", "Trashpack series 1", "Common", "THE GRUBZ", 1000, true),
 
-    Figure("TP:3", "Bud", "Purple", "Trashpack series 1", "Common", "BIN-SECTS"),
-    Figure("TP:4", "Super", "Gold", "Trashpack series 1", "Limited Edition", "LIMITED EDITION"),
+    Figure("TP-3", "Bud", "Purple", "Trashpack series 1", "Common", "BIN-SECTS"),
+    Figure("TP-4", "Super", "Gold", "Trashpack series 1", "Limited Edition", "LIMITED EDITION"),
 
 
 )
