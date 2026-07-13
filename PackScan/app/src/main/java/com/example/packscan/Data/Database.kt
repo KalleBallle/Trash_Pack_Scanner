@@ -7,13 +7,15 @@ import androidx.room.RoomDatabase
 import android.content.Context
 import androidx.room.Room
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.io.InputStreamReader
 
 
-
-@Database(entities = [Figure::class], version = 6, exportSchema = false)
+@Database(entities = [Figure::class], version = 7, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun figureDao(): FigureDao
 }
@@ -34,7 +36,8 @@ object DatabaseProvider {
                     override fun onCreate(db: SupportSQLiteDatabase) {
                         super.onCreate(db)
                         CoroutineScope(Dispatchers.IO).launch {
-                            getDatabase(context).figureDao().insertManyFigures(getAllKnownFigures())
+                            val figuresList = loadFiguresFromJson(context)
+                            getDatabase(context).figureDao().insertManyFigures(figuresList)
                         }
                     }
                 })
@@ -57,3 +60,20 @@ Figure("TP-2", "Smelly Fish", "Purple", "Trashpack series 1", "Common", "THE GRU
 
 
 )
+fun loadFiguresFromJson(context: Context): List<Figure> {
+    return try {
+
+        val inputStream = context.assets.open("trash_pack_data.json")
+        val reader = InputStreamReader(inputStream)
+
+
+        val itemType = object : TypeToken<List<Figure>>() {}.type
+        val figures: List<Figure> = Gson().fromJson(reader, itemType)
+
+        reader.close()
+        figures
+    } catch (e: Exception) {
+        e.printStackTrace()
+        emptyList()
+    }
+}

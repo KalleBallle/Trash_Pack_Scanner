@@ -21,7 +21,7 @@ print(len(files))
 model = MobileNetV2(weights="imagenet", include_top=False, pooling="avg")
 series = input("Enter series name of batch: ")
 team = input("Enter Name of the first team: ")
-stopID = input("Enter ID limit for fist the team: ")
+stopID = input("Enter ID start for next team: ")
 
 
 
@@ -34,7 +34,7 @@ for filename in files:
   
     while(id == int(stopID) and int(stopID) != get_id(files[-1])):
           team = input("Enter Name of the team: ")
-          stopID = input("Enter ID limit for the team: " )
+          stopID = input("Enter ID start for next team " )
     path = os.path.join("TrainingPhotos/",filename)
     img = Image.open(path)
     img = img.convert("RGB")

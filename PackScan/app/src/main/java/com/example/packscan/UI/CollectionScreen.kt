@@ -63,7 +63,7 @@ import com.example.packscan.UI.CollectionUi.TitleTTP
 fun collectionScreen(navController: NavController) {
     val context = LocalContext.current
 val db = remember { DatabaseProvider.getDatabase(context) }
-    val figures by db.figureDao().getAllSeries("Trashpack series 1").collectAsState(initial = emptyList())
+    val figures by db.figureDao().getAllSeries("Trashpack Series 1").collectAsState(initial = emptyList())
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(

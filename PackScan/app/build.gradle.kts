@@ -88,6 +88,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
 
+    implementation("com.google.code.gson:gson:2.10.1")
+
     val cameraxVersion = "1.6.1"
 
     implementation("androidx.camera:camera-core:$cameraxVersion")
