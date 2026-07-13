@@ -1,0 +1,80 @@
+import os
+import json
+from PIL import Image
+import numpy as np
+from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+print("hej")
+
+#måste använda den här för att gå in i virtual envoirment
+# source venv/bin/activate 
+
+def get_id(filename):
+    name = filename.split('.')[0]  
+    return int(name.split('_')[0].split('-')[1]) 
+figures_json = []
+files = sorted(os.listdir("TrainingPhotos/"), key=get_id)
+
+print(len(files))
+
+
+model = MobileNetV2(weights="imagenet", include_top=False, pooling="avg")
+series = input("Enter series name of batch: ")
+stopID = input("Enter ID limit for fist the team: ")
+team = input("Enter Name of the first team: ")
+
+
+for filename in files:
+    
+
+    name = filename.split('.')[0]
+    id =int(name.split('_')[0].split('-')[1])
+    print(id)
+  
+    while(id == int(stopID) and int(stopID) != get_id(files[-1])):
+          stopID = input("Enter ID limit for the team: " )
+          team = input("Enter Name of the team(ALL CAPS): ")
+    path = os.path.join("TrainingPhotos/",filename)
+    img = Image.open(path)
+    img = img.convert("RGB")
+    img = img.resize((224,224))
+    arr = np.array(img)
+    arr = arr.astype(np.float32)
+    arr = preprocess_input(arr)
+    arr = np.expand_dims(arr,axis=0)
+   
+    embedding = model.predict(arr)[0]
+    embedding_string = json.dumps(embedding.tolist())
+
+    parts = name.split('_')
+    figure_data = {
+       "id": parts[0],
+       "sculpt":parts[1].title(),
+       "variant":parts[2].title() ,
+       "series":series.title() ,
+       "rarity":parts[3].title() ,
+       "team": team.upper(),
+       "embedding" : embedding_string,
+   }
+    figures_json.append(figure_data)
+
+output_file = "trash_pack_data.json"
+
+if os.path.exists(output_file):
+    try:
+        with open(output_file, "r", encoding="utf-8") as f:
+            existing_data = json.load(f)
+            figures_json = existing_data + figures_json
+    except json.JSONDecodeError:
+        print(f"Warning: {output_file} was empty or broken. Starting clean.")
+
+with open(output_file, "w", encoding="utf-8") as f:
+    json.dump(figures_json, f, indent=4)
+
+print(f"Done saved to {output_file}")
+    
+
+        
+        
+        
+
